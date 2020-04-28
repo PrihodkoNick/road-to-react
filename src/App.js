@@ -5,7 +5,7 @@ import "./App.css";
 import Button from "./button";
 import Search from "./search";
 import Table from "./table";
-import Spinner from "./spinner";
+import Loading from "./loading";
 
 const DEFAULT_QUERY = "redux";
 const DEFAULT_HPP = "10";
@@ -25,21 +25,27 @@ export default class App extends Component {
     results: null,
     searchKey: "",
     error: null,
-    loading: true,
+    isLoading: false,
   };
 
   setSearchTopStories = (result) => {
     const { hits, page } = result;
-    const { searchKey, results } = this.state;
 
-    const oldHits =
-      results && results[searchKey] ? results[searchKey].hits : [];
+    this.setState((prevState) => {
+      const { searchKey, results } = prevState;
 
-    const newHits = [...oldHits, ...hits];
+      const oldHits =
+        results && results[searchKey] ? results[searchKey].hits : [];
 
-    this.setState({
-      loading: false,
-      results: { ...results, [searchKey]: { hits: newHits, page } },
+      const newHits = [...oldHits, ...hits];
+
+      return {
+        results: {
+          ...results,
+          [searchKey]: { hits: newHits, page },
+          isLoading: false,
+        },
+      };
     });
   };
 
@@ -78,15 +84,15 @@ export default class App extends Component {
   };
 
   fetchData = (searchTerm, page = 0) => {
+    this.setState({ isLoading: true });
+
     axios(
       `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}&${PARAM_PAGE}${page}&${PARAM_HPP}${DEFAULT_HPP}`
     )
       .then(
         (result) => this._isMounted && this.setSearchTopStories(result.data)
       )
-      .catch(
-        (error) => this._isMounted && this.setState({ error, loading: false })
-      );
+      .catch((error) => this._isMounted && this.setState({ error }));
   };
 
   componentDidMount() {
@@ -102,14 +108,11 @@ export default class App extends Component {
 
   // APP RENDER
   render() {
-    const { results, searchTerm, searchKey, error, loading } = this.state;
+    const { results, searchTerm, searchKey, error, isLoading } = this.state;
     const page =
       (results && results[searchKey] && results[searchKey].page) || 0;
     const list =
       (results && results[searchKey] && results[searchKey].hits) || [];
-
-    const spinner = loading ? <Spinner /> : null;
-    console.log("loading:", loading);
 
     if (error) {
       return <p>Something went wrong!</p>;
@@ -125,12 +128,15 @@ export default class App extends Component {
           >
             Поиск
           </Search>
-          {spinner}
           {results && <Table list={list} onDismiss={this.onDismiss} />}
           <div className="interactions">
-            <Button onClick={() => this.fetchData(searchKey, page + 1)}>
-              Больше историй
-            </Button>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              <Button onClick={() => this.fetchData(searchKey, page + 1)}>
+                Больше историй
+              </Button>
+            )}
           </div>
         </div>
       </div>

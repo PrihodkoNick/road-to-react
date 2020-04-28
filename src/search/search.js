@@ -1,11 +1,28 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Search = ({ searchTerm, onChange, onSubmit, children }) => (
-  <form onSubmit={onSubmit}>
-    {`${children}: `}
-    <input type="text" value={searchTerm} onChange={onChange} />
-    <button type="submit">{children}</button>
-  </form>
-);
+export default class Search extends Component {
+  componentDidMount() {
+    if (this.input) {
+      this.input.focus();
+    }
+  }
 
-export default Search;
+  render() {
+    const { searchTerm, onChange, onSubmit, children } = this.props;
+
+    return (
+      <form onSubmit={onSubmit}>
+        {`${children}: `}
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={onChange}
+          ref={(node) => {
+            this.input = node;
+          }}
+        />
+        <button type="submit">{children}</button>
+      </form>
+    );
+  }
+}
