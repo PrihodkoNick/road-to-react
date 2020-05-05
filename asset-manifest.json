@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/road-to-react/static/css/main.e9d84706.chunk.css",
+    "main.js": "/road-to-react/static/js/main.e157491f.chunk.js",
+    "main.js.map": "/road-to-react/static/js/main.e157491f.chunk.js.map",
+    "runtime-main.js": "/road-to-react/static/js/runtime-main.44594de8.js",
+    "runtime-main.js.map": "/road-to-react/static/js/runtime-main.44594de8.js.map",
+    "static/js/2.78f0caf9.chunk.js": "/road-to-react/static/js/2.78f0caf9.chunk.js",
+    "static/js/2.78f0caf9.chunk.js.map": "/road-to-react/static/js/2.78f0caf9.chunk.js.map",
+    "index.html": "/road-to-react/index.html",
+    "precache-manifest.0b1c78747b1030ffcd0f3cd5d0dcc239.js": "/road-to-react/precache-manifest.0b1c78747b1030ffcd0f3cd5d0dcc239.js",
+    "service-worker.js": "/road-to-react/service-worker.js",
+    "static/css/main.e9d84706.chunk.css.map": "/road-to-react/static/css/main.e9d84706.chunk.css.map",
+    "static/js/2.78f0caf9.chunk.js.LICENSE.txt": "/road-to-react/static/js/2.78f0caf9.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.44594de8.js",
+    "static/js/2.78f0caf9.chunk.js",
+    "static/css/main.e9d84706.chunk.css",
+    "static/js/main.e157491f.chunk.js"
+  ]
+}
